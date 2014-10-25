@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	qtReg = atoi(argv[1]);
-	printf("%d",qtReg);
+	//printf("%d",qtReg);
 	for(j=0;j<qtReg;j++){
 		ra = j;
 		comp=0;
