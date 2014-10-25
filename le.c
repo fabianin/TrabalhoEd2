@@ -7,6 +7,7 @@
 
 int main(int argc, char* argv[]){
 	int pos1=0;
+	float nota;
 	char buffer[BSIZE];
 	FILE* arq;
 	arq=fopen("arquivo.txt","r");
@@ -32,12 +33,18 @@ int main(int argc, char* argv[]){
 	}
 	pos1++;
 	printf(" ");
-	printf("%.2f ",(float)buffer[pos1]);
+	memcpy(&nota,(&buffer[pos1]),sizeof(float));
+	printf("%.2f ",nota);
 	pos1+=sizeof(float);
-	printf("%.2f ",(float)buffer[pos1]);
+	memcpy(&nota,(&buffer[pos1]),sizeof(float));
+	printf("%.2f ",nota);
 	pos1+=sizeof(float);
-	printf("%.2f ",(float)buffer[pos1]);
+	memcpy(&nota,(&buffer[pos1]),sizeof(float));
+	printf("%.2f ",nota);
 	pos1+=sizeof(float);
+	
 	fclose(arq);
 	return 0;
 }
+
+
