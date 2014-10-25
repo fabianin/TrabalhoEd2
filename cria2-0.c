@@ -13,6 +13,7 @@ int main(int argc, char* argv[]){
 	int x;
 	char buffer[BSIZE];
 	int pos1=0;
+	int j;
 	float n1,n2,n3;
 	FILE* arq;
 	arq = fopen("arquivo.txt","w+");
@@ -21,8 +22,8 @@ int main(int argc, char* argv[]){
 	}
 	qtReg = atoi(argv[1]);
 	printf("%d",qtReg);
-	for(i=0;i<qtReg;i++){
-		ra = i;
+	for(j=0;j<qtReg;j++){
+		ra = j;
 		comp=0;
 		comp+=sizeof(int);
 		//srand(time(NULL));
