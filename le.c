@@ -6,43 +6,45 @@
 #define BSIZE 100
 
 int main(int argc, char* argv[]){
-	int pos1=0;
-	float nota;
+	int pos1=0,i,RA,comp_reg,j;
+	char nome[20], snome[20];
+	float nota[3];
 	char buffer[BSIZE];
 	FILE* arq;
 	arq=fopen("arquivo.txt","r");
 	fread(buffer,BSIZE,1,arq);
-	printf("%d",(int)buffer[pos1]);
-	printf(" ");
+	do{
+	memcpy(&comp_reg,&(buffer[pos1]),sizeof(int));
 	pos1+=sizeof(int);
-	printf("%d",(int)buffer[pos1]);
-	printf(" ");
+	memcpy(&RA,&(buffer[pos1]),sizeof(int));
 	pos1+=sizeof(int);
-	printf(" ");
+	i=0;
 	while (buffer[pos1]!='#')
 	{
-		printf("%c",buffer[pos1]);
+		memcpy(&nome[i],&(buffer[pos1]),sizeof(char));
 		pos1++;
+		i++;
 	}
-	printf(" ");
+	nome[i]='\0';
 	pos1++;
+	j=0;
 	while (buffer[pos1]!='#')
 	{
-		printf("%c",buffer[pos1]);
+		memcpy(&snome[j],&(buffer[pos1]),sizeof(char));
 		pos1++;
+		j++;
 	}
+	snome[j]='\0';
 	pos1++;
-	printf(" ");
-	memcpy(&nota,(&buffer[pos1]),sizeof(float));
-	printf("%.2f ",nota);
+	memcpy(&nota[0],(&buffer[pos1]),sizeof(float));
 	pos1+=sizeof(float);
-	memcpy(&nota,(&buffer[pos1]),sizeof(float));
-	printf("%.2f ",nota);
+	memcpy(&nota[1],(&buffer[pos1]),sizeof(float));
 	pos1+=sizeof(float);
-	memcpy(&nota,(&buffer[pos1]),sizeof(float));
-	printf("%.2f ",nota);
+	memcpy(&nota[2],(&buffer[pos1]),sizeof(float));
 	pos1+=sizeof(float);
+	//nesse ponto um registro foi lido por completo e seus valores já estão salvo em váriaveis
 	
+	printf("%d\t%d\t%-20s\t%-20s\t%.2f\t%.2f\t%.2f\t",comp_reg, RA,nome,snome,nota[0],nota[1],nota[2]);
 	fclose(arq);
 	return 0;
 }
