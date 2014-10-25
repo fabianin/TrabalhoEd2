@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 		comp=0;
 		comp+=sizeof(int);
 		//srand(time(NULL));
-		tamanhoString1 = rand()%20; //sorteia o tamanho do nome
+		tamanhoString1 = 1 + rand()%18; //sorteia o tamanho do nome
 		nome = (char *)(malloc(sizeof(char)*tamanhoString1));//aloca memoria pro nome
 		for(count=0;count<tamanhoString1;count++)
 		{
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
 			//printf("%c",nome[count]);
 		}
 		comp+=sizeof(char)*(tamanhoString1+1);
-		tamanhoString2 = rand()%20; //sorteia o tamanho do sobrenome
+		tamanhoString2 = 1 + rand()%18; //sorteia o tamanho do sobrenome
 		snome = (char *)(malloc(sizeof(char)*tamanhoString2)); //alone memoria pro sobrenome
 		for(count=0;count<tamanhoString2;count++)
 		{
