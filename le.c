@@ -13,7 +13,6 @@ int main(int argc, char* argv[]){
 	FILE* arq;
 	arq=fopen("arquivo.txt","r");
 	fread(buffer,BSIZE,1,arq);
-	do{
 	memcpy(&comp_reg,&(buffer[pos1]),sizeof(int));
 	pos1+=sizeof(int);
 	memcpy(&RA,&(buffer[pos1]),sizeof(int));
