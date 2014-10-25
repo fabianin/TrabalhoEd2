@@ -77,8 +77,10 @@ int main(int argc, char* argv[]){
 		pos1+=sizeof(float);
 		memcpy(&buffer[pos1],&n3,sizeof(int));
 		pos1+=sizeof(float);
-		if(*argv[2]=='P'){
-			printf("%d\t%d\t%-20s\t%-20s\t%.2f\t%.2f\t%.2f\n",comp, ra,nome,snome,n1,n2,n3);
+		if(argc == 3){
+			if(*argv[2]=='P'){
+				printf("%d\t%d\t%-20s\t%-20s\t%.2f\t%.2f\t%.2f\n",comp, ra,nome,snome,n1,n2,n3);
+			}
 		}
 		nome=NULL;
 		free(nome);
