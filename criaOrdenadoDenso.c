@@ -72,10 +72,6 @@ int main(int argc, char* argv[]){
 				{
 					buffer[pos1] = '*';
 				}
-				memcpy(&buffer2[pos2],&ra,sizeof(int));
-				pos2+=sizeof(int);
-				memcpy(&buffer2[pos2],&offset,sizeof(int));
-				pos2+=sizeof(int);
 				fwrite(buffer,BSIZE,1,arq);
 				pos1=0;
 		}
@@ -103,7 +99,7 @@ int main(int argc, char* argv[]){
 		pos1+=sizeof(float);
 		memcpy(&buffer[pos1],&n3,sizeof(float));
 		pos1+=sizeof(float);
-		offset+=comp;
+		
 		if(*argv[2]=='P'){
 			printf("%d\t%d\t%-20s\t%-20s\t%.2f\t%.2f\t%.2f\n",comp, ra,nome,snome,n1,n2,n3);
 		}
@@ -127,6 +123,11 @@ int main(int argc, char* argv[]){
 				memcpy(&buffer[pos2],&qtReg,sizeof(int));
 				pos2+=sizeof(int);
 			}
+			memcpy(&buffer2[pos2],&ra,sizeof(int));
+			pos2+=sizeof(int);
+			memcpy(&buffer2[pos2],&offset,sizeof(int));
+			pos2+=sizeof(int);
+			offset+=comp;
 		}
 		free(nome);
 		free(snome);

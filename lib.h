@@ -17,7 +17,7 @@ unsigned pesquisa_no_bloco (char *buffer, char **aux, unsigned RA_consultado)
         memcpy (&chave_atual, *aux + sizeof (int), sizeof (int)); //Deslocamento de +sizeof (int) para ignorar o campo de quantidade de Bytes do registro e ir para o campo de RA.
         if(RA_consultado == chave_atual)
             return ENCONTRADO;
-        *aux = *aux + (num_bytes); //Aponta para o início do próximo registro. O +sizeof (int) representa os sizeof (int) Bytes correspondentes ao campo de número de Bytes.
+        *aux = *aux + (num_bytes); //Aponta para o início do próximo registro.
     }
     return NAO_ENCONTRADO;
 }
@@ -78,10 +78,40 @@ unsigned pesquisa_no_blocoB (char *buffer, char **aux, unsigned RA_consultado)
             if (*aux != buffer){            //Se a chave procurada for menor que a chave do registro lido e este não for o primeiro do bloco,
                 return NAO_ENCONTRADO;
             }    //a chave procurada não existe no arquivo.
-		}
             else
                 return PRIMEIRA_METADE;   //Se a chave procurada for menor que a chave do registro lido e este for o primeiro do bloco, deve-se pesquisar na primeira metade do intervalo considerado do arquivo.
+        }
         *aux = *aux + (num_bytes); //Aponta para o início do próximo registro.
+    }
+    return SEGUNDA_METADE; //Se a chave procurada for maior que a chave do último registro do bloco, deve-se pesquisar na segunda metade do intervalo considerado do arquivo.
+}
+
+
+
+// para arquivo de índices
+
+
+
+unsigned pesquisa_no_blocoI (char *buffer, char **aux, unsigned RA_consultado, unsigned bloco_corrente)
+{
+    unsigned chave_atual;
+    if (bloco_corrente != 1)
+        *aux = buffer;
+    else
+        *aux = buffer + sizeof (int); //O primeiro bloco do arquivo de índices contém um campo int com a quantidade de registros de índice.
+    while (**aux != '*' && *aux - buffer < BSIZE) //Lê registros enquanto não encontra o caractere pós-último registro do bloco e o buffer não é extrapolado.
+    {
+        memcpy (&chave_atual, *aux, sizeof (int)); //Deslocamento de +sizeof (int) para ignorar o campo de quantidade de Bytes do registro e ir para o campo de RA.
+        if(RA_consultado == chave_atual)
+            return ENCONTRADO;
+        if(RA_consultado < chave_atual){
+            if (*aux != buffer){            //Se a chave procurada for menor que a chave do registro lido e este não for o primeiro do bloco,
+                return NAO_ENCONTRADO;
+            }    //a chave procurada não existe no arquivo.
+            else
+                return PRIMEIRA_METADE;   //Se a chave procurada for menor que a chave do registro lido e este for o primeiro do bloco, deve-se pesquisar na primeira metade do intervalo considerado do arquivo.
+        }
+        *aux = *aux + 2 * sizeof (int); //Aponta para o início do próximo registro.
     }
     return SEGUNDA_METADE; //Se a chave procurada for maior que a chave do último registro do bloco, deve-se pesquisar na segunda metade do intervalo considerado do arquivo.
 }
