@@ -13,37 +13,38 @@ int main(int argc, char* argv[]){
 	FILE* arq;
 	arq=fopen("arquivo.txt","r");
 	fread(buffer,BSIZE,1,arq);
-	memcpy(&comp_reg,&(buffer[pos1]),sizeof(int));
-	pos1+=sizeof(int);
-	memcpy(&RA,&(buffer[pos1]),sizeof(int));
-	pos1+=sizeof(int);
-	i=0;
-	while (buffer[pos1]!='#')
-	{
-		memcpy(&nome[i],&(buffer[pos1]),sizeof(char));
+	do{
+		memcpy(&comp_reg,&(buffer[pos1]),sizeof(int));
+		pos1+=sizeof(int);
+		memcpy(&RA,&(buffer[pos1]),sizeof(int));
+		pos1+=sizeof(int);
+		i=0;
+		while (buffer[pos1]!='#')
+		{
+			memcpy(&nome[i],&(buffer[pos1]),sizeof(char));
+			pos1++;
+			i++;
+		}
+		nome[i]='\0';
 		pos1++;
-		i++;
-	}
-	nome[i]='\0';
-	pos1++;
-	j=0;
-	while (buffer[pos1]!='#')
-	{
-		memcpy(&snome[j],&(buffer[pos1]),sizeof(char));
+		j=0;
+		while (buffer[pos1]!='#')
+		{
+			memcpy(&snome[j],&(buffer[pos1]),sizeof(char));
+			pos1++;
+			j++;
+		}
+		snome[j]='\0';
 		pos1++;
-		j++;
-	}
-	snome[j]='\0';
-	pos1++;
-	memcpy(&nota[0],(&buffer[pos1]),sizeof(float));
-	pos1+=sizeof(float);
-	memcpy(&nota[1],(&buffer[pos1]),sizeof(float));
-	pos1+=sizeof(float);
-	memcpy(&nota[2],(&buffer[pos1]),sizeof(float));
-	pos1+=sizeof(float);
-	//nesse ponto um registro foi lido por completo e seus valores já estão salvo em váriaveis
-	
-	printf("%d\t%d\t%-20s\t%-20s\t%.2f\t%.2f\t%.2f\t",comp_reg, RA,nome,snome,nota[0],nota[1],nota[2]);
+		memcpy(&nota[0],(&buffer[pos1]),sizeof(float));
+		pos1+=sizeof(float);
+		memcpy(&nota[1],(&buffer[pos1]),sizeof(float));
+		pos1+=sizeof(float);
+		memcpy(&nota[2],(&buffer[pos1]),sizeof(float));
+		pos1+=sizeof(float);
+		//nesse ponto um registro foi lido por completo e seus valores já estão salvo em váriaveis
+		printf("%d %d %-20s %-20s %.2f %.2f %.2f\n",comp_reg, RA,nome,snome,nota[0],nota[1],nota[2]);
+	}while((buffer[pos1]!='*') && ((buffer[pos1+1]!='*') || (pos1 ==BSIZE)));
 	fclose(arq);
 	return 0;
 }
